@@ -49,6 +49,7 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
     languages = ["en"],
     defaultLanguage = "en",
     redirect = false,
+    ignorePaths = [],
   } = pluginOptions
 
   const getMessages = (path, language) => {
@@ -90,6 +91,10 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
       },
     }
   }
+
+  ignorePaths.forEach(p => {
+    if (p.test(page.path)) return
+  })
 
   const newPage = generatePage(false, defaultLanguage)
   deletePage(page)
