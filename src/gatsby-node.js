@@ -92,7 +92,7 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
     }
   }
 
-  newPage = generatePage(false, defaultLanguage)
+  const newPage = generatePage(false, defaultLanguage)
   deletePage(page)
   createPage(newPage)
   ignorePaths.forEach(function(p) {
