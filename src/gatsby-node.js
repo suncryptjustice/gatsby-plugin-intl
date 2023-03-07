@@ -111,7 +111,7 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
         deletePage(page)
         createPage({
           ...page,
-          path: path,
+          path: page.path,
           context: {
             ...page.context,
             intlBuildMeta: undefined,
