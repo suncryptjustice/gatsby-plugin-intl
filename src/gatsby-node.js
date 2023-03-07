@@ -107,6 +107,7 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
       })
     } else {
       if (page.context.intlBuildMeta) {
+        const messages = getMessages(path, page.context.intlBuildMeta.language)
         deletePage(page)
         createPage({
           ...page,
