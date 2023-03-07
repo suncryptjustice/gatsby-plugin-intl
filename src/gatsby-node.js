@@ -92,11 +92,11 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
     }
   }
 
-  const newPage = generatePage(false, defaultLanguage)
-  deletePage(page)
-  createPage(newPage)
   ignorePaths.forEach(function(p) {
     if (!p.test(page.path)) {
+      const newPage = generatePage(false, defaultLanguage)
+      deletePage(page)
+      createPage(newPage)
       languages.forEach(function(language) {
         var localePage = generatePage(true, language)
         var regexp = new RegExp("/404/?$")
@@ -105,6 +105,27 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
         }
         createPage(localePage)
       })
+    } else {
+      if (page.context.intlBuildMeta) {
+        deletePage(page)
+        createPage({
+          ...page,
+          path: path,
+          context: {
+            ...page.context,
+            intlBuildMeta: undefined,
+            language: intlBuildMeta.language,
+            intl: {
+              language: intlBuildMeta.language,
+              languages: intlBuildMeta.languages,
+              messages,
+              routed: intlBuildMeta.routed,
+              originalPath: intlBuildMeta.originalPath,
+              redirect,
+            },
+          },
+        })
+      }
     }
   })
 }
