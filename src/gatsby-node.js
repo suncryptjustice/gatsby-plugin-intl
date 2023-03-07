@@ -114,13 +114,12 @@ exports.onCreatePage = async ({ page, actions }, pluginOptions) => {
           context: {
             ...page.context,
             intlBuildMeta: undefined,
-            language: intlBuildMeta.language,
+            language: page.context.intlBuildMeta.language,
             intl: {
-              language: intlBuildMeta.language,
-              languages: intlBuildMeta.languages,
+              language: page.context.intlBuildMeta.language,
+              languages: page.context.intlBuildMeta.languages,
               messages,
-              routed: intlBuildMeta.routed,
-              originalPath: intlBuildMeta.originalPath,
+              routed: page.context.intlBuildMeta.routed,
               redirect,
             },
           },
